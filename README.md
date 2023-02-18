@@ -6,14 +6,14 @@
 출처:[https://github.com/radikris/booking_calendar]
 
 ## 목차
-1. [calendar customzing]
-2. [달력 날짜 클릭 시 bookSlots 변경 (selectNewDateRange 재설정)]
-3. [BookingService 생성자 재설정 (수정 요망)]
-4. [업체에 해당하는 예약 현황에 따라 bookSlots 변경(convertStreamResultMock 재설정)]
-5. [http 통신을 통한 companyBooking Bloc 구현]
-6. [http 통신 Test를 위한 Postman Test Json file 구축]
-7. [#103으로 선택한 날짜의 시간을 전달]
-8. [휴무일 처리]
+1. [calendar customzing](#calendar-customzing)
+2. [달력 날짜 클릭 시 slot 변경](#달력-날짜-클릭-시-slot-변경)
+3. [생성자 재설정](#생성자-재설정)
+4. [업체에 해당하는 예약 현황에 따라 slot 변경](#업체에-해당하는-예약-현황에-따라-slot-변경)
+5. [bloc 아키텍처](#bloc-아키텍처)
+6. [json file 처리](#json-file-처리)
+7. [다음 페이지로 데이터 전달](#다음-페이지로-데이터-전달)
+8. [휴무일 처리](#휴무일-처리)
 
 ### calendar customzing
 
@@ -153,7 +153,7 @@ TableCalendar(
 
 → 달력 시간, 언어를 ‘ko-KR’로 수정
 
-### 달력 날짜 클릭 시 bookSlots 변경 (selectNewDateRange 재설정)
+### 달력 날짜 클릭 시 slot 변경
 
 ```dart
 void selectNewDateRange() {
@@ -241,7 +241,7 @@ body: StreamBuilder(
 
 기존 initState()는 삭제.
 
-### BookingService 생성자 재설정 (수정 요망)
+### 생성자 재설정
 
 ```dart
 BookingService(
@@ -324,7 +324,7 @@ List<DateTime>? bookedStartList;   //업체 별 예약 된 시간의 시작 시�
 List<DateTime>? bookedEndList;     //업체 별 예약 된 시간의 끝 시간을 담은 List
 ```
 
-### 업체에 해당하는 예약 현황에 따라 bookSlots 변경(convertStreamResultMock 재설정)
+### 업체에 해당하는 예약 현황에 따라 slot 변경
 
 해당 파트에서는 업체의 예약 현황을 stream으로 받아와 동적으로 예약 시간을 처리하는 method이다. booking_calendar_demo(mainApp)에 정의되어 있다.
 
@@ -427,7 +427,7 @@ final data = snapshot.requireData;
 
 해당 파트에서 Stream Builder의 stream source를 기존 getBookingSteram에서 bookingBloc의 BehaviorSubject bookingResult로 변경하여 호출로 인해 변경되는 BookingService를 구독하였다.
 
-### http 통신을 통한 companyBooking Bloc 구현
+### bloc 아키텍처
 
 ```dart
 //in bookingCalendar_bloc.dart
@@ -488,7 +488,7 @@ class BookingBloc{
 
 → 기능 정상확인을 위해 작성됨
 
-### http 통신 Test를 위한 Postman Test Json file 구축
+### json file 처리
 
 ```json
 {
@@ -515,7 +515,7 @@ class BookingBloc{
 
 현재 Postman uzumango mock Server에서 구동 중이며 Test 용으로 사용 중이다.
 
-### #103으로 선택한 날짜의 시간을 전달
+### 다음 페이지로 데이터 전달
 
 ```dart
 CommonButton(
